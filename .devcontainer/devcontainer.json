@@ -1,0 +1,12 @@
+{
+	"image": "mcr.microsoft.com/devcontainers/universal:2",
+	"features": {
+	},
+	"postCreateCommand": "wget -q -O openrefine.tar.gz https://github.com/OpenRefine/OpenRefine/releases/download/3.7.7/openrefine-linux-3.7.7.tar.gz && tar --exclude 'licenses' --exclude 'LICENSE.txt' --exclude 'licenses.xml' --exclude 'README.md' -xzf openrefine.tar.gz --strip 1 && rm openrefine.tar.gz && wget https://github.com/opencultureconsulting/orcli/raw/main/orcli && chmod +x orcli && ln -s \"${PWD}/orcli\" ~/.local/bin/",
+	"forwardPorts": [3333],
+	"portsAttributes": {
+		"3333": {
+			"label": "OpenRefine"
+		}
+	}
+}
