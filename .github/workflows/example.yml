@@ -7,7 +7,7 @@ jobs:
   main:
     runs-on: ubuntu-22.04
     steps:
-    - uses: actions/checkout@v2 # checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@v4 # checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - name: install OpenRefine and openrefine-client
       run: |
         mkdir -p output .openrefine
@@ -18,7 +18,9 @@ jobs:
         sed -i 's/#REFINE_AUTOSAVE_PERIOD=60/REFINE_AUTOSAVE_PERIOD=1440/' ".openrefine/refine.ini" # set autosave period from 5 minutes to 25 hours
         wget --no-verbose -O .openrefine/orcli https://github.com/opencultureconsulting/orcli/raw/main/orcli
         chmod +x .openrefine/orcli
-        ln -s "${PWD}/.openrefine/orcli" ~/.local/bin/
+        mkdir -p $HOME/.local/bin
+        ln -s "$HOME/.openrefine/orcli" "$HOME/.local/bin/"
+        echo ::add-path::$HOME/.local/bin
     - name: start orcli
       run: |
         .openrefine/orcli --help
