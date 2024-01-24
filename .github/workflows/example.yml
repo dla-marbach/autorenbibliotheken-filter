@@ -1,0 +1,31 @@
+name: example # available as environment variable $GITHUB_WORKFLOW
+
+on:
+  workflow_dispatch: # allows you to run this workflow manually from the Actions tab
+
+jobs:
+  main:
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v2 # checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - name: install OpenRefine and openrefine-client
+      run: |
+        mkdir -p output .openrefine
+        wget --no-verbose -O openrefine.tar.gz https://github.com/OpenRefine/OpenRefine/releases/download/3.7.7/openrefine-linux-3.7.7.tar.gz
+        tar -xzf openrefine.tar.gz -C .openrefine --strip 1 && rm openrefine.tar.gz
+        sed -i 's/cd `dirname $0`/cd "$(dirname "$0")"/' ".openrefine/refine" # fix path issue in OpenRefine startup file
+        sed -i '$ a JAVA_OPTIONS=-Drefine.headless=true' ".openrefine/refine.ini" # do not try to open OpenRefine in browser
+        sed -i 's/#REFINE_AUTOSAVE_PERIOD=60/REFINE_AUTOSAVE_PERIOD=1440/' ".openrefine/refine.ini" # set autosave period from 5 minutes to 25 hours
+        wget --no-verbose -O .openrefine/orcli https://github.com/opencultureconsulting/orcli/raw/main/orcli
+        chmod +x .openrefine/orcli
+        ln -s "${PWD}/.openrefine/orcli" ~/.local/bin/
+    - name: start orcli
+      run: |
+        .openrefine/orcli --help
+    - name: commit and push if something changed
+      run: |-
+        git config user.name "Automated"
+        git config user.email "actions@users.noreply.github.com"
+        git add -A
+        git commit -m "latest change: $(date -u)" || exit 0
+        git push
