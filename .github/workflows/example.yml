@@ -18,12 +18,9 @@ jobs:
         sed -i 's/#REFINE_AUTOSAVE_PERIOD=60/REFINE_AUTOSAVE_PERIOD=1440/' ".openrefine/refine.ini" # set autosave period from 5 minutes to 25 hours
         wget --no-verbose -O .openrefine/orcli https://github.com/opencultureconsulting/orcli/raw/main/orcli
         chmod +x .openrefine/orcli
-        mkdir -p $HOME/.local/bin
-        ln -s "$HOME/.openrefine/orcli" "$HOME/.local/bin/"
-        echo ::add-path::$HOME/.local/bin
     - name: start orcli
       run: |
-        .openrefine/orcli --help
+        .openrefine/orcli run main.sh
     - name: commit and push if something changed
       run: |-
         git config user.name "Automated"
