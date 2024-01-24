@@ -1,0 +1,15 @@
+[
+    {
+      "op": "core/column-addition",
+      "engineConfig": {
+        "facets": [],
+        "mode": "row-based"
+      },
+      "baseColumnName": "item_id_mv",
+      "expression": "grel:forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['personAt_display_mv'].value.replace('␟','; '), x, x, '␣')).join('␟')",
+      "onError": "set-to-blank",
+      "newColumnName": "item_personAt_display_mv",
+      "columnInsertIndex": 131,
+      "description": "Beispiel für Anreicherung von weiteren Exemplardaten (hier Personennamen aus dem Feld personAt_display_mv im Projekt Exemplare)"
+    }
+  ]

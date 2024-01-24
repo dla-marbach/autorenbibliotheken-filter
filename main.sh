@@ -1,23 +1,23 @@
 # Download Autorenbibliothek vom DLA Datendienst
+# TODO: Aktivieren wenn Datendienst öffentlich verfügbar
 
-# wget https://dataservice.dla-marbach.de/v1/records?q=item_holding_id_mv:BF00019677 > input/titeldaten.json
-# wget https://dataservice.dla-marbach.de/v1/records?q=holding_id_mv:BF00019677 > input/exemplare.json
+# wget https://dataservice.dla-marbach.de/v1/records?q=item_holding_id_mv:BF00019677&format=csv > input/titeldaten.csv
+# wget https://dataservice.dla-marbach.de/v1/records?q=holding_id_mv:BF00019677&format=csv > input/exemplare.csv
 
 # Import
 
-orcli import json input/titeldaten.json --projectName "titeldaten" --rename
-orcli import json input/exemplare.json --projectName "exemplare" --rename
-
-# Spalten umbenennen nach dem Import in OpenRefine
-
-orcli transform "titeldaten" config/titeldaten-umbenennen.json
-orcli transform "exemplare" config/exemplare-umbenennen.json
+orcli import csv input/titeldaten.csv --projectName "titeldaten"
+orcli import csv input/exemplare.csv --projectName "exemplare"
 
 # Im Projekt Titeldaten Verweise auf Exemplare entfernen, die nicht im Projekt Exemplare vorhanden sind
 
-orcli transform "titeldaten" config/exemplare-filtern.json
+orcli transform "titeldaten" config/verweise-filtern.json
+
+# Beispiel für Anreicherung weiterer Exemplardaten
+
+orcli transform "titeldaten" config/exemplardaten-anreichern.json
 
 # Export in JSON-Lines
 
-orcli export jsonl "titeldaten" --mode records --output "output/titeldaten.jsonl"
-orcli export jsonl "exemplare" --mode records --output "output/exemplare.jsonl"
+orcli export jsonl "titeldaten" --separator "␟" --output "output/titeldaten.jsonl"
+orcli export jsonl "exemplare" --separator "␟" --output "output/exemplare.jsonl"
