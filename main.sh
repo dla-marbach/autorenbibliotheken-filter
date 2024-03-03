@@ -1,8 +1,8 @@
 # Download Autorenbibliothek vom DLA Datendienst
-# TODO: Aktivieren wenn Datendienst öffentlich verfügbar
+# TODO: Aktivieren wenn CSV ohne Escaping verfügbar
 
-# wget https://dataservice.dla-marbach.de/v1/records?q=item_holding_id_mv:BF00019097&format=csv > input/titeldaten.csv
-# wget https://dataservice.dla-marbach.de/v1/records?q=holding_id_mv:BF00019097&format=csv > input/exemplare.csv
+# wget -O input/titeldaten.csv "https://dataservice.dla-marbach.de/v1/records?q=item_holding_id_mv:BF00019097&format=csv"
+# wget -O input/exemplare.csv "https://dataservice.dla-marbach.de/v1/records?q=holding_id_mv:BF00019097&format=csv"
 
 # Import
 
