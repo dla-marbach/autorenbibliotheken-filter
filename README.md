@@ -20,12 +20,9 @@ Fragen beantwortet gerne [Felix Lohmeier](https://github.com/felixlohmeier).
 
 ## Daten
 
-* [input](input) beinhaltet einen Download der Autorenbibliothek von Alfred Döblin vom DLA Datendienst im Format CSV
 * [output](output) beinhaltet die gefilterten Daten im Format JSON-Lines
 
-Stand des Datenabzugs: 29.01.2024
-
-Es ist geplant, den Prozess in Kürze zu automatisieren und in diesem Repository regelmäßig aktualisierte Beispieldaten bereitzustellen.
+Stand des Datenabzugs: 19.05.2026
 
 ## Anpassung für andere Autorenbibliotheken
 

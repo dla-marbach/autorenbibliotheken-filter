@@ -1,20 +1,5 @@
 [
   {
-    "op": "core/column-removal",
-    "columnName": "item_display_mv",
-    "description": "Remove column item_display_mv"
-  },
-  {
-    "op": "core/column-removal",
-    "columnName": "item_holding_display_mv",
-    "description": "Remove column item_holding_display_mv"
-  },
-  {
-    "op": "core/column-removal",
-    "columnName": "item_holding_id_mv",
-    "description": "Remove column item_holding_id_mv"
-  },
-  {
     "op": "core/text-transform",
     "engineConfig": {
       "facets": [],
@@ -28,17 +13,29 @@
     "description": "Verweise auf Exemplare entfernen, die nicht im Projekt Exemplare vorhanden sind"
   },
   {
+    "op": "core/column-removal",
+    "columnName": "item_supplements_id_mv",
+    "description": "Feld in Bestand AU nicht direkt vorhanden"
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_display_mv"
+  },
+  {
     "op": "core/column-addition",
     "engineConfig": {
       "facets": [],
       "mode": "row-based"
     },
     "baseColumnName": "item_id_mv",
-    "expression": "grel:forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['display'].value, x, x, '␣')).join('␟')",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['display'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
     "onError": "set-to-blank",
     "newColumnName": "item_display_mv",
-    "columnInsertIndex": 131,
-    "description": "Create column item_display_mv at index 131 based on column item_id_mv using expression grel:forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['display'].value, x, x, '␣')).join('␟')"
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_accessionNumber_mv"
   },
   {
     "op": "core/column-addition",
@@ -47,11 +44,14 @@
       "mode": "row-based"
     },
     "baseColumnName": "item_id_mv",
-    "expression": "grel:forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['holding_display_mv'].value, x, x, '␣')).join('␟')",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['accessionNumber'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
     "onError": "set-to-blank",
-    "newColumnName": "item_holding_display_mv",
-    "columnInsertIndex": 131,
-    "description": "Create column item_holding_display_mv at index 131 based on column item_id_mv using expression grel:forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['holding_display_mv'].value, x, x, '␣')).join('␟')"
+    "newColumnName": "item_accessionNumber_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_broadcastDate_mv"
   },
   {
     "op": "core/column-addition",
@@ -60,10 +60,521 @@
       "mode": "row-based"
     },
     "baseColumnName": "item_id_mv",
-    "expression": "grel:forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['holding_id_mv'].value, x, x, '␣')).join('␟')",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['broadcastDate'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
     "onError": "set-to-blank",
-    "newColumnName": "item_holding_id_mv",
-    "columnInsertIndex": 131,
-    "description": "Create column item_holding_id_mv at index 131 based on column item_id_mv using expression grel:forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['holding_id_mv'].value, x, x, '␣')).join('␟')"
+    "newColumnName": "item_broadcastDate_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_broadcastStation_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['broadcastStation'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_broadcastStation_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_callNumberCollection_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['callNumberCollection_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_callNumberCollection_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_callNumberItemSuffix_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['callNumberItemSuffix'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_callNumberItemSuffix_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_callNumberItem_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['callNumberItem'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_callNumberItem_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_callNumberReadingRoom_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['callNumberReadingRoom'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_callNumberReadingRoom_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_classification_display_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['classification_display_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_classification_display_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_classification_id_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['classification_id_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_classification_id_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_collection_display_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['collection_display_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_collection_display_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_collection_id_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['collection_id_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_collection_id_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_corporationAt_display_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['corporationAt_display_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_corporationAt_display_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_corporationAt_id_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['corporationAt_id_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_corporationAt_id_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_digitalObject_accessLevel_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['digitalObject_accessLevel_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_digitalObject_accessLevel_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_digitalObject_display_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['digitalObject_display_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_digitalObject_display_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_digitalObject_fileExtension_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['digitalObject_fileExtension_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_digitalObject_fileExtension_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_digitalObject_hyperlink_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['digitalObject_hyperlink_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_digitalObject_hyperlink_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_digitalObject_id_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['digitalObject_id_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_digitalObject_id_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_digitalObject_licenseNote_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['digitalObject_license_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_digitalObject_licenseNote_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_digitalObject_license_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['digitalObject_licenseNote_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_digitalObject_license_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_digitalObject_thumbnail_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['digitalObject_thumbnail_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_digitalObject_thumbnail_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_enveloped_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['enveloped'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_enveloped_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_location_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['location_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_location_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_manifestation_display_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['manifestation_display'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_manifestation_display_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_manifestation_id_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['manifestation_id'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_manifestation_id_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_noteOther_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['noteOther_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_noteOther_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_noteProvenance_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['noteProvenance_text_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_noteProvenance_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_note_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['note'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_note_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_personAt_display_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['personAt_display_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_personAt_display_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_personAt_id_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['personAt_id_mv'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_personAt_id_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_provenance_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['provenance'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_provenance_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_usageRestrictionNote_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['usageRestrictionNote'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_usageRestrictionNote_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_usageRestriction_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['usageRestriction'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_usageRestriction_mv",
+    "columnInsertIndex": 2
+  },
+  {
+    "op": "core/column-removal",
+    "columnName": "item_virtualRecording_mv"
+  },
+  {
+    "op": "core/column-addition",
+    "engineConfig": {
+      "facets": [],
+      "mode": "row-based"
+    },
+    "baseColumnName": "item_id_mv",
+    "expression": "grel:forNonBlank(forEach(value.split('␟'),v,forNonBlank(v.cross('exemplare','id')[0].cells['virtualRecording'].value, x, x, '␣')).join('␟'), z, if(isBlank(z.replace('␣','')), null, z), null)",
+    "onError": "set-to-blank",
+    "newColumnName": "item_virtualRecording_mv",
+    "columnInsertIndex": 2
   }
 ]
